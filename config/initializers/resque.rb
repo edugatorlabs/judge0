@@ -2,6 +2,7 @@ Resque.redis = Redis.new(
   host:     ENV["REDIS_HOST"],
   port:     ENV["REDIS_PORT"],
   password: ENV["REDIS_PASSWORD"],
+  ssl:      ENV["REDIS_SSL"] == "true",
   thread_safe: true
 )
 
