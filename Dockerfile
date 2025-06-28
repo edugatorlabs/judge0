@@ -45,8 +45,3 @@ USER judge0
 
 ENV JUDGE0_VERSION "1.13.1"
 LABEL version=$JUDGE0_VERSION
-
-
-FROM production AS development
-
-CMD ["sleep", "infinity"]
