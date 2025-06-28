@@ -1,4 +1,4 @@
-name: Deploy Backend
+name: Deploy Judge0
 
 on:
   release:
@@ -10,7 +10,7 @@ env:
   ECS_CLUSTER_NAME: judge0-cluster
   ECS_SERVICE_NAME: judge0-service
   ECR_REPO: edugatorlabs/judge0
-  TASKDEF: judge0-service-taskdef
+  TASKDEF: judge0-taskdef
   PIPELINE_ID: ${{ github.run_id }}-${{ github.run_number }}
 
 permissions:
