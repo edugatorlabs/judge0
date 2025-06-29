@@ -1,4 +1,4 @@
-FROM judge0/compilers:1.4.0 AS production
+FROM 990066513532.dkr.ecr.us-east-1.amazonaws.com/edugatorlabs/judge0-compilers:15950456235-1 AS production
 
 ENV JUDGE0_HOMEPAGE "https://judge0.com"
 LABEL homepage=$JUDGE0_HOMEPAGE
