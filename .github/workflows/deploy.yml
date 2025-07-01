@@ -78,30 +78,30 @@ jobs:
             --task-definition ${{ env.NEW_TASK_DEF_ARN }} \
             --force-new-deployment
 
-            - name: Wait for ECS Service Deployment
-            run: |
-              echo "Waiting for ECS service '${{ env.ECS_SERVICE_NAME }}' to stabilize..."
+      - name: Wait for ECS Service Deployment
+        run: |
+          echo "Waiting for ECS service '${{ env.ECS_SERVICE_NAME }}' to stabilize..."
 
-              sleep 5
-              for i in {1..360}; do
-                DEPLOYMENT_STATUS=$(aws ecs describe-services \
-                  --cluster ${{ env.ECS_CLUSTER_NAME }} \
-                  --services ${{ env.ECS_SERVICE_NAME }} \
-                  --query "services[0].deployments[?status=='PRIMARY'].rolloutState" \
-                  --output text)
+          sleep 5
+          for i in {1..360}; do
+            DEPLOYMENT_STATUS=$(aws ecs describe-services \
+              --cluster ${{ env.ECS_CLUSTER_NAME }} \
+              --services ${{ env.ECS_SERVICE_NAME }} \
+              --query "services[0].deployments[?status=='PRIMARY'].rolloutState" \
+              --output text)
 
-                echo "Current rollout state: $DEPLOYMENT_STATUS"
+            echo "Current rollout state: $DEPLOYMENT_STATUS"
 
-                if [ "$DEPLOYMENT_STATUS" = "COMPLETED" ]; then
-                  echo "Deployment completed."
-                  break
-                fi
+            if [ "$DEPLOYMENT_STATUS" = "COMPLETED" ]; then
+              echo "Deployment completed."
+              break
+            fi
 
-                echo "Waiting... ($i/360)"
-                sleep 10
-              done
+            echo "Waiting... ($i/360)"
+            sleep 10
+          done
 
-              if [ "$DEPLOYMENT_STATUS" != "COMPLETED" ]; then
-                echo "Timed out waiting for deployment to complete."
-                exit 1
-              fi
+          if [ "$DEPLOYMENT_STATUS" != "COMPLETED" ]; then
+            echo "Timed out waiting for deployment to complete."
+            exit 1
+          fi
